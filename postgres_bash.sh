@@ -46,7 +46,7 @@ function get_field_list {
     return 1
 }
 
-# Get table fields and data
+# Get table fields and data with proper formatting
 function get_table_fields_and_data {
     local host=$1
     local user=$2
@@ -56,12 +56,16 @@ function get_table_fields_and_data {
 
     # Get table fields
     local fields=$(PGPASSWORD="$password" psql -h "$host" -U "$user" -d "$database" -t -c "SELECT column_name FROM information_schema.columns WHERE table_schema='public' AND table_name='$table';")
-    local formatted_fields=$(echo "$fields" | xargs | tr ' ' '\t')
+    local formatted_fields=$(echo "$fields" | xargs)
 
     # Get table data
     local data=$(PGPASSWORD="$password" psql -h "$host" -U "$user" -d "$database" -t -c "SELECT * FROM \"$table\" LIMIT 5;")
 
-    echo -e "$formatted_fields\n$data"
+    # Combine fields and data, format with `column`
+    {
+        echo -e "$formatted_fields"
+        echo -e "$data"
+    } | column -t -s $'\t'
 }
 
 # Display summary of PII detection results in table format
@@ -135,3 +139,5 @@ read -p "Enter the keyword list file name: " keyword_file
 
 # Run the script
 print_databases_and_tables "$host" "$user" "$password" "$keyword_file"
+
+
