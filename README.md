@@ -17,6 +17,9 @@ The limitation of the code is that it only matches keywords with fields. So if s
 
 /// got hella lot of help from gemini ◦°˚\(*❛ ‿ ❛)/˚°◦
 
+
+/// wrote the bash code using deepseek. no credit to me \(*_*)/
+
 /\︵-︵/\
  |(◉)=(◉)|
   \ ︶V︶ /
@@ -24,6 +27,8 @@ The limitation of the code is that it only matches keywords with fields. So if s
 |↺↺↺↺↺|
  \↺↺ ↺↺/
  ¯¯/\¯/\¯¯
+
+
 
 
 
