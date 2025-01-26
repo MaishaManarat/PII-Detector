@@ -124,9 +124,20 @@ function print_databases_and_tables {
             done
             echo -e "\n-----------------------------------------------------------------------------------------\n"
         done
+
+        # Append the summary table to the output file
+        echo -e "\nSummary of PII Data Detection:"
+        echo "======================================================"
+        printf "%-30s | %-15s\n" "Database.Table" "PII Detected?"
+        echo "------------------------------------------------------"
+        for entry in "${pii_summary_list[@]}"; do
+            IFS='|' read -r db_table detected <<< "$entry"
+            printf "%-30s | %-15s\n" "$db_table" "$detected"
+        done
+        echo "======================================================"
     } > "$output_file"
 
-    # Display the summary table
+    # Display the summary table in the terminal
     display_pii_summary "${pii_summary_list[@]}"
 }
 
@@ -139,5 +150,3 @@ read -p "Enter the keyword list file name: " keyword_file
 
 # Run the script
 print_databases_and_tables "$host" "$user" "$password" "$keyword_file"
-
-
